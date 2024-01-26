@@ -1,0 +1,16 @@
+# all file types need to be ignored 
+*nii.gz
+*nii
+*npy
+*npz
+*.tif 
+*.nii.gz
+/Lib
+/Scripts
+*.exe
+/__pycache__
+*cfg
+*.hdf5
+*.png
+*jpg
+*.edf

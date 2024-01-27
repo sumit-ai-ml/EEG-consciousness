@@ -5,20 +5,20 @@
 
 ## Detecting consciousness in coma patients using EEG 
 
-### step 1: Data Collection 
+### Step 1: Data Collection 
 
 
-### step 2: Data Preprocessing 
+### Step 2: Data Preprocessing 
 
 
-### step 3: model selection 
+### Step 3: model selection 
 
 
-### step 4: Training Process 
+### Step 4: Training Process 
 
 
-### step 5: Testing 
+### Step 5: Testing 
 
 
-### step 6: Repeat again from step 3 again 
+### Step 6: Repeat again from step 3 again 
 

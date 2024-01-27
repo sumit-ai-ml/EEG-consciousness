@@ -9,6 +9,7 @@
 /Scripts
 *.exe
 /__pycache__
+/input_data
 *cfg
 *.hdf5
 *.png

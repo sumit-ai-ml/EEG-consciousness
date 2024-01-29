@@ -33,6 +33,6 @@ def convert_edf_to_csv(edf_path, csv_path):
     merged_df.to_csv(csv_path, index=True)
 
 # Usage example:
-#edf_file_path = "test-EEG.edf"
-#csv_file_path = "aligned_data.csv"
-#convert_edf_to_csv(edf_file_path, csv_file_path)
+edf_file_path = "/Users/sumitpandey/Downloads/EEG-consciousness/EDF files/01CX-EDF+.edf"
+csv_file_path = "/Users/sumitpandey/Downloads/EEG-consciousness/input_data/01CX-EDF+.csv"
+convert_edf_to_csv(edf_file_path, csv_file_path)

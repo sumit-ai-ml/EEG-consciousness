@@ -1,6 +1,7 @@
 import mne
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def plot_description_histogram(csv_file_path, output_file_name):
     # Read the .csv file using pandas
@@ -77,11 +78,53 @@ def print_csv_columns(file_path):
     columns = df.columns
     
     # Print the column names
-    print("Columns in the CSV file:")
-    for column in columns:
-        print(column.values())
+    print("Columns in the CSV file:", columns.values)
+    
 
 # Example usage
 # Replace 'your_file_path.csv' with the actual path to your .csv file
 # print_csv_columns('your_file_path.csv')
         
+def filter_csv(input_file_path, output_folder='filtered_data', output_file_name='filtered_data.csv'):
+    """
+    Filters a CSV file to keep only specific values in the 'description' column and saves the result to a new file.
+
+    :param input_file_path: Path to the input CSV file.
+    :param output_folder: Folder where the filtered CSV will be saved. Defaults to 'filtered_data'.
+    :param output_file_name: Name of the output CSV file. Defaults to 'filtered_data.csv'.
+    """
+    # Ensure the output directory exists
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # Load the CSV file
+    df = pd.read_csv(input_file_path)
+
+    # print the unique values 
+    unique_descriptions = df['description'].unique()
+    print("Unique values in 'description' column:", unique_descriptions)
+
+    # Define the EEG columns to keep
+    eeg_columns = [
+        'EEG Fp1-REF', 'EEG Fp2-REF', 'EEG F3-REF', 'EEG F4-REF',
+        'EEG C3-REF', 'EEG C4-REF', 'EEG P3-REF', 'EEG P4-REF', 'EEG O1-REF',
+        'EEG O2-REF', 'EEG F7-REF', 'EEG F8-REF', 'EEG T7-REF', 'EEG T8-REF',
+        'EEG P7-REF', 'EEG P8-REF', 'EEG T9-REF', 'EEG T10-REF', 'EEG Fz-REF',
+        'EEG Cz-REF', 'EEG Pz-REF', 'EEG F10-REF', 'EEG F9-REF', 'EEG P9-REF',
+        'EEG P10-REF', 'ECG EKG-REF', 'description'
+    ]
+
+    # Filter the dataframe to keep only specific values in the 'description' column and the specified EEG columns
+    filtered_df = df[df['description'].isin(['Resting', 'Tiltale-X', 'Tiltale-Y'])][eeg_columns]
+
+
+
+    # Construct the full output path
+    #output_file_path = os.path.join(output_folder, output_file_name)
+
+    # Save the filtered data to the specified output CSV file
+    #filtered_df.to_csv(output_file_path, index=False)
+
+    #print(f"Filtered CSV saved to '{output_file_path}'")
+
+    return filtered_df

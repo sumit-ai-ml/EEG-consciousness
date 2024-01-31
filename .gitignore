@@ -1,4 +1,5 @@
 # all file types need to be ignored 
+*.csv
 *nii.gz
 *nii
 *npy

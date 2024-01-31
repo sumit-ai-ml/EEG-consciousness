@@ -84,10 +84,15 @@ def print_csv_columns(file_path):
 # Example usage
 # Replace 'your_file_path.csv' with the actual path to your .csv file
 # print_csv_columns('your_file_path.csv')
-        
+ 
+
+import pandas as pd
+import os
+
 def filter_csv(input_file_path, output_folder='filtered_data', output_file_name='filtered_data.csv'):
     """
-    Filters a CSV file to keep only specific values in the 'description' column and saves the result to a new file.
+    Filters a CSV file to keep only specific values in the 'description' column, prints unique values in this column,
+    keeps only specified EEG columns and 'description', and saves the result to a new file.
 
     :param input_file_path: Path to the input CSV file.
     :param output_folder: Folder where the filtered CSV will be saved. Defaults to 'filtered_data'.
@@ -95,12 +100,13 @@ def filter_csv(input_file_path, output_folder='filtered_data', output_file_name=
     """
     # Ensure the output directory exists
     if not os.path.exists(output_folder):
+        print('building folder')
         os.makedirs(output_folder)
 
     # Load the CSV file
     df = pd.read_csv(input_file_path)
 
-    # print the unique values 
+    # Print unique values in the 'description' column
     unique_descriptions = df['description'].unique()
     print("Unique values in 'description' column:", unique_descriptions)
 
@@ -109,22 +115,51 @@ def filter_csv(input_file_path, output_folder='filtered_data', output_file_name=
         'EEG Fp1-REF', 'EEG Fp2-REF', 'EEG F3-REF', 'EEG F4-REF',
         'EEG C3-REF', 'EEG C4-REF', 'EEG P3-REF', 'EEG P4-REF', 'EEG O1-REF',
         'EEG O2-REF', 'EEG F7-REF', 'EEG F8-REF', 'EEG T7-REF', 'EEG T8-REF',
-        'EEG P7-REF', 'EEG P8-REF', 'EEG T9-REF', 'EEG T10-REF', 'EEG Fz-REF',
-        'EEG Cz-REF', 'EEG Pz-REF', 'EEG F10-REF', 'EEG F9-REF', 'EEG P9-REF',
-        'EEG P10-REF', 'ECG EKG-REF', 'description'
+        'EEG P7-REF', 'EEG P8-REF',  'EEG Fz-REF', 'EEG Cz-REF', 'EEG Pz-REF',  
+        'ECG EKG-REF', 'description'
     ]
+
+
 
     # Filter the dataframe to keep only specific values in the 'description' column and the specified EEG columns
     filtered_df = df[df['description'].isin(['Resting', 'Tiltale-X', 'Tiltale-Y'])][eeg_columns]
 
-
-
     # Construct the full output path
-    #output_file_path = os.path.join(output_folder, output_file_name)
+    output_file_path = os.path.join(output_folder, output_file_name)
 
     # Save the filtered data to the specified output CSV file
-    #filtered_df.to_csv(output_file_path, index=False)
+    filtered_df.to_csv(output_file_path, index=False)
 
-    #print(f"Filtered CSV saved to '{output_file_path}'")
+    print(f"Filtered CSV saved to '{output_file_path}'")
 
-    return filtered_df
+
+
+import os
+
+def process_all_csv_files(input_folder, output_folder='filtered_data', output_file_prefix='filtered_'):
+    """
+    Reads all CSV files from a specified folder, filters each file to keep only specific values in the 'description'
+    column along with specified EEG columns, and saves the result to new files in a specified output folder.
+
+    :param input_folder: Folder containing the input CSV files.
+    :param output_folder: Folder where the filtered CSV files will be saved. Defaults to 'filtered_data'.
+    :param output_file_prefix: Prefix for the output CSV file names. Defaults to 'filtered_'.
+    """
+    # List all files in the input folder
+    files = os.listdir(input_folder)
+
+    # Filter for CSV files
+    csv_files = [file for file in files if file.endswith('.csv')]
+
+    # Process each CSV file
+    for file in csv_files:
+        print('=============================================')
+        input_file_path = os.path.join(input_folder, file)
+        output_file_name = f"{output_file_prefix}{file}"
+        print(f"Processing file: {file}")
+        
+        # Use the previously defined function to filter the CSV file
+        filter_csv(input_file_path, output_folder, output_file_name)
+
+# Example usage: Replace 'your_input_folder' with the path to your folder containing the CSV files
+#process_all_csv_files('your_input_folder')
